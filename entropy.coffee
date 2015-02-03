@@ -1,18 +1,19 @@
+natural = require 'natural'
+fs = require 'fs'
+
 log2 = (num) ->
   Math.log(num) / Math.LN2
 
-class FrequencyDistribution 
+class FrequencyDistribution
   constructor: (@tokenList) ->
 
   calculateProbabilities: ->
     counts = {}
     probs = {}
-    total = @tokenList.length # is it any faster to save this in a local variable?
     for token in @tokenList
-      if counts[token]?
-        counts[token] += 1
-      else
-        counts[token] = 1
+      counts[token] = counts[token] + 1 || 1 # better style than explicit ternary?
+
+    total = @tokenList.length # is it any faster to save this in a local variable?
     for token of counts
       probs[token] = counts[token]/total
     probs
@@ -28,3 +29,5 @@ console.log calculateEntropy ['m', 'm', 'm', 'm']
 console.log calculateEntropy ['m', 'f', 'f', 'f']
 console.log calculateEntropy ['m', 'f', 'm', 'm']
 console.log calculateEntropy ['m', 'f', 'm', 'f']
+
+exports.calculateEntropy = calculateEntropy
