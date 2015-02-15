@@ -11,9 +11,9 @@ class FrequencyDistribution
     counts = {}
     probs = {}
     for token in @tokenList
-      counts[token] = counts[token] + 1 || 1 # better style than explicit ternary?
+      counts[token] = counts[token] + 1 or 1
 
-    total = @tokenList.length # is it any faster to save this in a local variable?
+    total = @tokenList.length
     for token of counts
       probs[token] = counts[token]/total
     probs
